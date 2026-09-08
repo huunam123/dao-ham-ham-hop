@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện Tập Đạo Hàm Hàm Hợp</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Đạo Hàm Hàm Hợp</h1>
+            <div class="stats">
+                <span>✅ Đúng: <b id="correctCount">0</b></span>
+                <span>❌ Sai: <b id="wrongCount">0</b></span>
+                <span>📝 Tổng: <b id="totalCount">0</b></span>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Phần câu hỏi -->
+            <div class="question-section" id="questionSection">
+                <div class="question-header">
+                    <h2>Câu hỏi <span id="questionNumber">1</span></h2>
+                    <button class="btn btn-skip" onclick="app.skipQuestion()">Bỏ qua</button>
+                </div>
+                
+                <div class="function-display">
+                    <h3>Tính đạo hàm của hàm số:</h3>
+                    <div class="math-expression" id="mathExpression">
+                        y = (3x² + 2x + 1)⁵
+                    </div>
+                </div>
+
+                <div class="answer-input">
+                    <label for="userAnswer">Đáp án của bạn:</label>
+                    <input type="text" id="userAnswer" placeholder="Nhập đạo hàm (ví dụ: 5(3x^2+2x+1)^4*(6x+2)">
+                    <small>Nhập theo dạng: hệ_số*(hàm_trong)^số_mũ*(đạo_hàm_hàm_trong)</small>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-primary" onclick="app.checkAnswer()">Kiểm tra</button>
+                    <button class="btn btn-secondary" onclick="app.showHint()">Gợi ý</button>
+                    <button class="btn btn-info" onclick="app.showSolution()">Xem lời giải</button>
+                </div>
+
+                <div class="feedback" id="feedback"></div>
+                <div class="solution" id="solution"></div>
+            </div>
+
+            <!-- Phần quản lý câu hỏi -->
+            <div class="manage-section">
+                <h2>📋 Quản lý câu hỏi</h2>
+                
+                <div class="tabs">
+                    <button class="tab active" onclick="app.switchTab('list')">Danh sách</button>
+                    <button class="tab" onclick="app.switchTab('add')">Thêm mới</button>
+                    <button class="tab" onclick="app.switchTab('import')">Nhập/Xuất</button>
+                </div>
+
+                <!-- Tab danh sách -->
+                <div class="tab-content active" id="tab-list">
+                    <div class="question-list" id="questionList"></div>
+                </div>
+
+                <!-- Tab thêm mới -->
+                <div class="tab-content" id="tab-add">
+                    <form id="addQuestionForm" onsubmit="app.addQuestion(event)">
+                        <div class="form-group">
+                            <label>Hàm số f(x):</label>
+                            <input type="text" id="inputFunction" placeholder="Ví dụ: (3x^2+2x+1)^5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Hàm trong u(x):</label>
+                            <input type="text" id="inputInnerFunction" placeholder="Ví dụ: 3x^2+2x+1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Số mũ n:</label>
+                            <input type="number" id="inputPower" placeholder="Ví dụ: 5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Đáp án đúng:</label>
+                            <input type="text" id="inputAnswer" placeholder="Ví dụ: 5*(3x^2+2x+1)^4*(6x+2)" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Gợi ý:</label>
+                            <textarea id="inputHint" rows="2" placeholder="Gợi ý cách giải..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Lời giải chi tiết:</label>
+                            <textarea id="inputSolution" rows="4" placeholder="Giải thích từng bước..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Độ khó:</label>
+                            <select id="inputDifficulty">
+                                <option value="easy">Dễ</option>
+                                <option value="medium" selected>Trung bình</option>
+                                <option value="hard">Khó</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Thêm câu hỏi</button>
+                    </form>
+                </div>
+
+                <!-- Tab nhập/xuất -->
+                <div class="tab-content" id="tab-import">
+                    <div class="import-export">
+                        <div class="export-section">
+                            <h3>Xuất dữ liệu</h3>
+                            <button class="btn btn-secondary" onclick="app.exportData()">Xuất JSON</button>
+                            <button class="btn btn-secondary" onclick="app.exportToText()">Xuất TXT</button>
+                        </div>
+                        
+                        <div class="import-section">
+                            <h3>Nhập dữ liệu</h3>
+                            <textarea id="importData" rows="6" placeholder="Dán dữ liệu JSON vào đây..."></textarea>
+                            <button class="btn btn-primary" onclick="app.importData()">Nhập dữ liệu</button>
+                            <button class="btn btn-danger" onclick="app.clearAllData()">Xóa tất cả</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="javascript/storage.js"></script>
+    <script src="javascript/data.js"></script>
+    <script src="javascript/app.js"></script>
+</body>
+</html>
